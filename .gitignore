@@ -1,0 +1,4 @@
+venv
+hosts.json
+.idea
+*__pycache__*/
