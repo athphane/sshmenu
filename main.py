@@ -10,6 +10,9 @@ from helpers.ascii_art import ASCII_ART
 from helpers.host_modification import add_host
 from helpers.table import display_table
 
+PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
+os.environ['PATH_TO_HOSTS'] = PATH_TO_HOSTS
+
 
 def run_ssh_command(selected_record):
     # Run the SSH command
@@ -50,7 +53,7 @@ def select_record(data, filter_tag=None):
 
 def main():
     # Load data from the JSON file
-    with open('hosts.json') as f:
+    with open(os.environ['PATH_TO_HOSTS']) as f:
         data = json.load(f)["hosts"]
 
     parser = argparse.ArgumentParser(description='SSH Host Management')
@@ -69,10 +72,7 @@ def main():
 
 
 if __name__ == '__main__':
-    while True:
-        os.system('cls' if os.name == 'nt' else 'clear')  # Clear the console
-
-        try:
-            main()
-        except KeyboardInterrupt:
-            sys.exit()
+    try:
+        main()
+    except KeyboardInterrupt:
+        sys.exit()

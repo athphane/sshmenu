@@ -1,4 +1,6 @@
 import json
+import os
+import sys
 
 
 def add_host(data):
@@ -16,7 +18,9 @@ def add_host(data):
 
     data.append(new_host)
 
-    with open('hosts.json', 'w') as f:
+    with open(os.environ['PATH_TO_HOSTS'], 'w') as f:
         json.dump({'hosts': data}, f, indent=4)
 
     print("New host added successfully!")
+
+    sys.exit()
