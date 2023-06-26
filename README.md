@@ -48,6 +48,11 @@ python main.py [--add] [--toggle] [--filter TAG]
 
 Note: If no options are provided, the tool will display a list of hosts for selection.
 
+## The hosts.json file
+
+The script will look for the hosts.json file in a "sensible default" location, which is the user's SSH config folder.
+Here's the full path to it: `~/.ssh/hosts.json`
+
 ## Configuration
 
 The hosts are stored in a JSON file named `hosts.json`. You can manually edit this file to add or modify hosts.
@@ -81,21 +86,45 @@ Here's an example of the JSON structure:
 ```
 
 ## Examples
+
 1. Add a new host:
+
 ```shell
 python main.py --add
 ```
+
 2. Toggle address visibility for a host
+
 ```shell
 python main.py --toggle
 ```
+
 3. Filter hosts by a tag
+
 ```shell
 python main.py --filter tag1
 ```
 
+## Building the Executable with PyInstaller
+
+PyInstaller is a popular tool for creating standalone executables from Python applications.
+Follow the steps below to build the executable for SSHMenu.
+
+1. Run the helper script to do it automatically
+
+```shell
+.\build.bat
+```
+
+This will run the script, activate your virtual environment and compiles an EXE of SSHMenu.
+
+The compiled EXE will be in the [/dist](dist) folder of the project. You can move it to a different folder in your
+system, or to a folder that is added to your PATH, which will let you use the exe from anywhere on your system.
+
 ## Contributing
-Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or submit a pull request.
+
+Contributions are welcome! If you find any issues or have suggestions for improvements, feel free to open an issue or
+submit a pull request.
 
 ## Credits
 
@@ -103,4 +132,5 @@ Contributions are welcome! If you find any issues or have suggestions for improv
 - [All Contributors](../../contributors)
 
 ## License
+
 This project is licensed under the MIT License
