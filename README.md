@@ -1,5 +1,7 @@
 # SSHMenu
 
+![sshmenu screenshot](assets/screenshot.png)
+
 SSHMenu is a command-line tool that allows you to manage and connect to your SSH hosts conveniently. You can
 add new hosts, toggle address visibility, and select hosts to establish SSH connections.
 
