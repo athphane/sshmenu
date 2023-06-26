@@ -1,6 +1,6 @@
-# SSH Host Management
+# SSHMenu
 
-SSH Host Management is a command-line tool that allows you to manage and connect to your SSH hosts conveniently. You can
+SSHMenu is a command-line tool that allows you to manage and connect to your SSH hosts conveniently. You can
 add new hosts, toggle address visibility, and select hosts to establish SSH connections.
 
 ## Features
@@ -19,7 +19,7 @@ add new hosts, toggle address visibility, and select hosts to establish SSH conn
 1. Clone the repository:
 
 ```shell
-git clone https://github.com/your-username/ssh-host-management.git
+git clone https://github.com/athphane/sshmenu.git
 ```
 
 2. Navigate to the project directory
