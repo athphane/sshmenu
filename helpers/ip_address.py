@@ -2,6 +2,11 @@ import re
 
 
 def is_ip_address(address):
+    """
+    Check if input address is an IP Address
+    :param address:
+    :return:
+    """
     # Regular expression pattern for IP address validation
     pattern = r'^\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}$'
 
