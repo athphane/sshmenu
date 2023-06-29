@@ -7,18 +7,24 @@ import time
 
 from helpers.addresses import toggle_address_visibility
 from helpers.ascii_art import ASCII_ART
-from helpers.host_modification import add_host
+from helpers.host_modification import add_host, remove_host
 from helpers.table import display_table
+from helpers.tracking import track_access
 
-PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
+# PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
+PATH_TO_HOSTS = 'hosts.json'
 os.environ['PATH_TO_HOSTS'] = PATH_TO_HOSTS
 
 
 def run_ssh_command(selected_record):
+    track_access(selected_record)
+
     # Run the SSH command
     ssh_command = ["ssh", "-p", str(selected_record['port']),
                    f"{selected_record['username']}@{selected_record['address']}"]
+
     subprocess.run(ssh_command)
+
     sys.exit()
 
 
@@ -58,6 +64,7 @@ def main():
 
     parser = argparse.ArgumentParser(description='SSH Host Management')
     parser.add_argument('--add', action='store_true', help='Add a new host')
+    parser.add_argument('--remove', action='store_true', help='Remove an existing host')
     parser.add_argument('--toggle', action='store_true', help='Toggle address visibility')
     parser.add_argument('--filter', metavar='TAG', help='Filter hosts by tag')
 
@@ -65,6 +72,8 @@ def main():
 
     if args.add:
         add_host(data)
+    elif args.remove:
+        remove_host(data)
     elif args.toggle:
         toggle_address_visibility(data)
     else:
