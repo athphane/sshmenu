@@ -11,8 +11,8 @@ from helpers.host_modification import add_host, remove_host
 from helpers.table import display_table
 from helpers.tracking import track_access
 
-# PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
-PATH_TO_HOSTS = 'hosts.json'
+PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
+# PATH_TO_HOSTS = 'hosts.json'
 os.environ['PATH_TO_HOSTS'] = PATH_TO_HOSTS
 
 
