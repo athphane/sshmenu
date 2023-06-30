@@ -15,6 +15,11 @@ PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
 # PATH_TO_HOSTS = 'hosts.json'
 os.environ['PATH_TO_HOSTS'] = PATH_TO_HOSTS
 
+# create the json file it doesnt exist
+if not os.path.exists(PATH_TO_HOSTS):
+    with open(PATH_TO_HOSTS, 'w') as f:
+        json.dump({"hosts": [], "accesses": []}, f)
+
 
 def run_ssh_command(selected_record):
     track_access(selected_record)
@@ -22,7 +27,7 @@ def run_ssh_command(selected_record):
     # Run the SSH command
     ssh_command = ["ssh", "-p", str(selected_record['port']),
                    f"{selected_record['username']}@{selected_record['address']}"]
-
+    os.system('cls' if os.name == 'nt' else 'clear')  # Clear the console
     subprocess.run(ssh_command)
 
     sys.exit()
