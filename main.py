@@ -1,42 +1,40 @@
 import argparse
 import json
 import os
-import subprocess
 import sys
 import time
 
+from colorama import init as colorama_init
+
 from helpers.addresses import toggle_address_visibility
 from helpers.ascii_art import ASCII_ART
+from helpers.connection import run_ssh_command, clear_console
 from helpers.host_modification import add_host, remove_host
 from helpers.table import display_table
-from helpers.tracking import track_access
 
-PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
-# PATH_TO_HOSTS = 'hosts.json'
+colorama_init()
+
+# PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
+PATH_TO_HOSTS = 'hosts.json'
 os.environ['PATH_TO_HOSTS'] = PATH_TO_HOSTS
 
-# create the json file it doesnt exist
+# create the json file it doesn't exist
 if not os.path.exists(PATH_TO_HOSTS):
     with open(PATH_TO_HOSTS, 'w') as f:
         json.dump({"hosts": [], "accesses": []}, f)
 
 
-def run_ssh_command(selected_record):
-    track_access(selected_record)
-
-    # Run the SSH command
-    ssh_command = ["ssh", "-p", str(selected_record['port']),
-                   f"{selected_record['username']}@{selected_record['address']}"]
-    os.system('cls' if os.name == 'nt' else 'clear')  # Clear the console
-    subprocess.run(ssh_command)
-
-    sys.exit()
-
-
 def select_record(data, filter_tag=None):
+    """
+    Select a record from the table and run the SSH command
+    :param data:
+    :param filter_tag:
+    :return:
+    """
     while True:
         while True:
-            os.system('cls' if os.name == 'nt' else 'clear')  # Clear the console
+            # Clear the console and display the ASCII art
+            clear_console()
             print(ASCII_ART)
 
             # Display the table

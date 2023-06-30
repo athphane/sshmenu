@@ -6,6 +6,11 @@ from helpers.table import display_table
 
 
 def toggle_address_visibility(data):
+    """
+    Toggle the address visibility for a record
+    :param data:
+    :return:
+    """
     display_table(data)
 
     while True:

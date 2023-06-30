@@ -6,10 +6,26 @@ from helpers.table import display_table
 
 
 def add_host(data):
+    """
+    Add a new host to the list
+    :param data:
+    :return:
+    """
     name = input("Enter the name: ")
     username = input("Enter the username: ")
     address = input("Enter the address: ")
-    port = int(input("Enter the port: "))
+
+    # get the port from input, and if not provided, use the default port 22
+    port = input("Enter the port (default: 22): ")
+    if port == "":
+        port = 22
+    else:
+        port = int(port)
+
+    # get the identiy file from input, default to none
+    identity_file = input("Enter the identity file (default: none): ")
+    if identity_file == "":
+        identity_file = None
 
     new_host = {
         'name': name,
