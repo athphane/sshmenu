@@ -14,8 +14,8 @@ from helpers.table import display_table
 
 colorama_init()
 
-# PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
-PATH_TO_HOSTS = 'hosts.json'
+PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
+# PATH_TO_HOSTS = 'hosts.json'
 os.environ['PATH_TO_HOSTS'] = PATH_TO_HOSTS
 
 # create the json file it doesn't exist
