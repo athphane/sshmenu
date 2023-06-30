@@ -1,0 +1,15 @@
+{
+    "hosts": [
+        {
+            "name": "Titan",
+            "username": "athphane",
+            "address": "192.168.100.200",
+            "port": 22,
+            "hide_address": true,
+            "key": "~/.ssh/id_rsa", // path to your private key
+            "tags": [
+                "personal"
+            ]
+        },
+    ]
+}
