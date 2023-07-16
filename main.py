@@ -1,16 +1,11 @@
-import argparse
 import json
 import os
-import sys
-import time
 
 from colorama import init as colorama_init
+from simple_term_menu import TerminalMenu
 
-from helpers.addresses import toggle_address_visibility
-from helpers.ascii_art import ASCII_ART
-from helpers.connection import run_ssh_command, clear_console
-from helpers.host_modification import add_host, remove_host
-from helpers.table import display_table
+from helpers.connection import run_ssh_command
+from helpers.ip_address import obfuscate_ip, is_ip_address
 
 colorama_init()
 
@@ -24,67 +19,45 @@ if not os.path.exists(PATH_TO_HOSTS):
         json.dump({"hosts": [], "accesses": []}, f)
 
 
-def select_record(data, filter_tag=None):
-    """
-    Select a record from the table and run the SSH command
-    :param data:
-    :param filter_tag:
-    :return:
-    """
-    while True:
-        while True:
-            # Clear the console and display the ASCII art
-            clear_console()
-            print(ASCII_ART)
-
-            # Display the table
-            display_table(data, filter_tag)
-
-            # Get user input for the selected record
-            selected_index = input("Enter the ID of the record to run the SSH command (or -1 to exit): ")
-            if selected_index == "-1":
-                sys.exit()
-
-            # Validate the selected index
-            if selected_index.isdigit() and 1 <= int(selected_index) <= len(data):
-                break
-
-            print("Invalid ID!")
-            time.sleep(0.3)
-
-        # Get the selected record
-        selected_record = data[int(selected_index) - 1]
-
-        print(f"Loading connection to {selected_record['address']}")
-
-        run_ssh_command(selected_record)
-
-
 def main():
     # Load data from the JSON file
     with open(os.environ['PATH_TO_HOSTS']) as f:
         data = json.load(f)["hosts"]
 
-    parser = argparse.ArgumentParser(description='SSH Host Management')
-    parser.add_argument('--add', action='store_true', help='Add a new host')
-    parser.add_argument('--remove', action='store_true', help='Remove an existing host')
-    parser.add_argument('--toggle', action='store_true', help='Toggle address visibility')
-    parser.add_argument('--filter', metavar='TAG', help='Filter hosts by tag')
+    options = []
 
-    args = parser.parse_args()
+    for index, record in enumerate(data, start=1):
+        if 'hide_address' in record.keys() and record['hide_address'] is True:
+            obfuscated_address = '*' * len(record['address'])
+        else:
+            obfuscated_address = obfuscate_ip(record['address']) if is_ip_address(record['address']) else record[
+                'address']
 
-    if args.add:
-        add_host(data)
-    elif args.remove:
-        remove_host(data)
-    elif args.toggle:
-        toggle_address_visibility(data)
-    else:
-        select_record(data, args.filter)
+        values = record['name']
+        options.append(values)
+
+    main_menu_title = "  Main Menu.\n  Press Q or Esc to quit. \n"
+    main_menu_cursor = "> "
+    main_menu_cursor_style = ("fg_blue", "bold")
+    main_menu_style = ("bg_blue", "fg_black")
+    menu_highlight_style = ("bg_blue", "fg_black")
+    terminal_menu = TerminalMenu(
+        options,
+        title=main_menu_title,
+        menu_cursor=main_menu_cursor,
+        menu_cursor_style=main_menu_cursor_style,
+        menu_highlight_style=main_menu_style,
+        search_highlight_style=menu_highlight_style,
+        cycle_cursor=True,
+        clear_screen=True,
+    )
+    menu_entry_index = terminal_menu.show()
+
+    print(f"Connecting to {data[menu_entry_index]}")
+
+    run_ssh_command(data[menu_entry_index])
+    # print(f"You have selected {options[menu_entry_index]}!")
 
 
 if __name__ == '__main__':
-    try:
-        main()
-    except KeyboardInterrupt:
-        sys.exit()
+    main()
