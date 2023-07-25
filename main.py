@@ -56,7 +56,7 @@ def main():
         )
         menu_entry_index = terminal_menu.show()
 
-        print(f"Connecting to {data[menu_entry_index]}")
+        print(f"Connecting to {data[menu_entry_index]['name']}")
         time.sleep(0.5)
 
         run_ssh_command(data[menu_entry_index])
