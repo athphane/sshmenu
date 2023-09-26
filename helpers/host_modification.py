@@ -36,8 +36,11 @@ def add_host(data):
 
     data.append(new_host)
 
+    file_data = json.loads(open(os.environ['PATH_TO_HOSTS'], 'r').read())
+    file_data['hosts'] = data
+
     with open(os.environ['PATH_TO_HOSTS'], 'w') as f:
-        json.dump({'hosts': data}, f, indent=4)
+        json.dump(data, f, indent=4)
 
     print("New host added successfully!")
 

@@ -3,7 +3,6 @@ import subprocess
 import sys
 
 from helpers.path import expand_path
-from helpers.tracking import track_access
 
 
 def construct_ssh_command(selected_record):
@@ -29,9 +28,6 @@ def clear_console():
 
 
 def run_ssh_command(selected_record):
-    # Track the access
-    track_access(selected_record)
-
     # Construct the SSH command with
     ssh_command = construct_ssh_command(selected_record)
 
