@@ -24,7 +24,7 @@ if not os.path.exists(PATH_TO_HOSTS):
 def main():
     # Load data from the JSON file
     with open(os.environ['PATH_TO_HOSTS']) as f:
-        data = json.load(f)["hosts"]
+        data = json.load(f)['hosts']
 
     parser = argparse.ArgumentParser(description='SSH Host Management')
     parser.add_argument('--add', action='store_true', help='Add a new host')

@@ -31,7 +31,8 @@ def add_host(data):
         'name': name,
         'username': username,
         'address': address,
-        'port': port
+        'port': port,
+        'key': identity_file
     }
 
     data.append(new_host)
@@ -40,7 +41,7 @@ def add_host(data):
     file_data['hosts'] = data
 
     with open(os.environ['PATH_TO_HOSTS'], 'w') as f:
-        json.dump(data, f, indent=4)
+        json.dump(file_data, f, indent=4)
 
     print("New host added successfully!")
 
