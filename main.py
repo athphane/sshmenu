@@ -9,6 +9,8 @@ from simple_term_menu import TerminalMenu
 from helpers.connection import run_ssh_command
 from helpers.host_modification import add_host, remove_host
 
+__version__ = 'v1.0.0'
+
 colorama_init()
 
 PATH_TO_HOSTS = os.path.expanduser('~/.ssh/hosts.json')
@@ -39,7 +41,7 @@ def main():
     else:
         options = [record['name'] for record in data]
 
-        main_menu_title = "  Main Menu.\n  Press Q or Esc to quit. \n"
+        main_menu_title = f"  SSHMenu {__version__}\n  Main Menu.\n  Press Q or Esc to quit. \n"
         main_menu_cursor = "> "
         main_menu_cursor_style = ("fg_blue", "bold")
         main_menu_style = ("bg_blue", "fg_black")
